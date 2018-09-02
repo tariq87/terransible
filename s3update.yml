@@ -1,0 +1,7 @@
+---
+- hosts: dev
+  become: yes
+  remote_user: ec2-user
+  tasks:
+     - name: Update S3 Code Bucket
+       command: aws s3 sync /var/www/html s3://{{ s3code }}/ --delete
