@@ -10,7 +10,7 @@
        - php
        - php-mysql
      - name: Download Wordpress
-       get_url: url=http://wordpress.org/wordpress-latest-tar.gz dest=/var/www/html/wordpress.tar.gz force=yes
+       get_url: url=https://wordpress.org/latest.tar.gz dest=/var/www/html/wordpress.tar.gz force=yes
      - name: Extract Wordpress
        command: "tar xzvf /var/www/html/wordpress.tar.gz -C /var/www/html --strip-component 1"
      - name: Make my directory tree readable
@@ -20,5 +20,5 @@
           recurse: yes
           owner: apache
           group: apache
-      - name: Start Apache Now and at Boot
-        service: name=httpd state=started enabled=yes	
+     - name: Start Apache Now and at Boot
+       service: name=httpd state=started enabled=yes	

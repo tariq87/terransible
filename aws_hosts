@@ -1,0 +1,5 @@
+	[dev]
+	18.212.233.30
+	[dev:vars]
+	s3code=terran-43205
+	domain=terran

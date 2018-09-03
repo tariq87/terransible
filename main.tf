@@ -30,19 +30,21 @@ EOF
 }
 
 resource "aws_iam_role" "s3_access_role" {
-  name = "s3_access_role"
+  name = "s3_access_role" 
 
   assume_role_policy = <<EOF
-		{
-		  "Version": "2012-10-17",
-		  "Statement": [
-				{
-				  "Action": "sts:AssumeRole",
-				  "Principal": { "Service": "ec2.amazonaws.com" },
-				  "Effect": "Allow",
-				  "Sid": ""
-				}
-			      ]
+{
+  "Version": "2012-10-17",
+  "Statement": [
+  {
+    "Action": "sts:AssumeRole",
+    "Principal": {
+        "Service": "ec2.amazonaws.com"
+  },
+    "Effect": "Allow",
+    "Sid": ""
+    }
+  ]
 }
 EOF
 }
@@ -297,19 +299,6 @@ resource "aws_vpc_endpoint" "wp_private-s3_endpoint" {
   vpc_id          = "${aws_vpc.wp_vpc.id}"
   service_name    = "com.amazonaws.${var.aws_region}.s3"
   route_table_ids = ["${aws_vpc.wp_vpc.main_route_table_id}", "${aws_route_table.wp_public_rt.id}"]
-
-  policy = <<POLICY
-{
-	"Statement": [
-			{
-			    "Action": "*",
-			    "Effect": "Allow",
-			    "Resource": "*",
-			    "Pricipal": "*"
-			}
-		     ]
-}
-POLICY
 }
 
 #------Adding S3 Bucket--------
@@ -404,12 +393,12 @@ resource "aws_elb" "wp_elb" {
 	}
 }
 #--------AMI--------
-resource "random_id" "golden_ami" {
-	byte_length = 3
-}
+#resource "random_id" "golden_ami" {
+#	byte_length = 6
+#}
 
 resource "aws_ami_from_instance" "wp_golden" {
-	name = "wp_ami-${random_id.golden_ami.b64}"
+	name = "wp_ami-${var.time}"
 	source_instance_id = "${aws_instance.wp_dev.id}"
 	provisioner "local-exec" {
 		command = <<EOT
